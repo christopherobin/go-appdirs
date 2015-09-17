@@ -1,8 +1,12 @@
 # AppDirs
 
+When writing apps pretty often you will want to store configuration, cache, logs and other types
+of data in the standard folders defined by your operating system, this library help provide you
+those directories (creating and managing those folder is still your responsability though).
+
 This is a somewhat straight port of [`ActiveState/appdirs`](https://github.com/ActiveState/appdirs)
-from Python to Go, at least in behavior. The current difference is that no support for Windows is
-planned yet.
+from Python to Go, at least in behavior. No support for Windows is planned yet but feel free to
+send PRs.
 
 ## Usage
 
@@ -22,6 +26,9 @@ import (
 	"github.com/christopherobin/go-appdirs"
 )
 
+// Create an application configuration object, name should be the
+// name of your application. You can also provide a version if you
+// wish for the configuration/data to be versioned.
 var appConf := appdirs.AppConf{Name:"my-app"}
 
 func main() {
@@ -91,8 +98,22 @@ func (conf AppConf) UserCacheDir() (string, error) {}
 //   Mac OS X:               ~/Library/Logs/<AppName>
 //   Unix:                   ~/.cache/<AppName>/logs  # or under $XDG_CACHE_HOME if defined
 func (conf AppConf) UserLogDir() (string, error) {}
+
+// Shortcut for AppConf{appName}.UserDataDir
+func UserDataDir(appName string) (string, error) {}
+
+// Shortcut for AppConf{appName}.SiteDataDir
+func SiteDataDir(appName string) (string, error) {}
+
+// Shortcut for AppConf{appName}.UserConfigDir
+func UserConfigDir(appName string) (string, error) {}
+
+// Shortcut for AppConf{appName}.SiteConfigDir
+func SiteConfigDir(appName string) (string, error) {}
+
+// Shortcut for AppConf{appName}.UserCacheDir
+func UserCacheDir(appName string) (string, error) {}
+
+// Shortcut for AppConf{appName}.UserLogDir
+func UserLogDir(appName string) (string, error) {}
 ```
-
-## TODO
-
-* OSX implementation

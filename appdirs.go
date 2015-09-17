@@ -68,32 +68,32 @@ func (conf AppConf) UserLogDir() (string, error) {
 	return conf.userLogDir()
 }
 
-// Shortcut for AppConf{name}.UserDataDir
-func UserDataDir(name string) (string, error) {
-	return (AppConf{Name: name}).UserDataDir()
+// Shortcut for AppConf{appName}.UserDataDir
+func UserDataDir(appName string) (string, error) {
+	return (AppConf{Name: appName}).UserDataDir()
 }
 
-// Shortcut for AppConf{name}.SiteDataDir
-func SiteDataDir(name string) (string, error) {
-	return (AppConf{Name: name}).SiteDataDir()
+// Shortcut for AppConf{appName}.SiteDataDir
+func SiteDataDir(appName string) (string, error) {
+	return (AppConf{Name: appName}).SiteDataDir()
 }
 
-// Shortcut for AppConf{name}.UserConfigDir
-func UserConfigDir(name string) (string, error) {
-	return (AppConf{Name: name}).UserConfigDir()
+// Shortcut for AppConf{appName}.UserConfigDir
+func UserConfigDir(appName string) (string, error) {
+	return (AppConf{Name: appName}).UserConfigDir()
 }
 
-// Shortcut for AppConf{name}.SiteConfigDir
-func SiteConfigDir(name string) (string, error) {
-	return (AppConf{Name: name}).SiteConfigDir()
+// Shortcut for AppConf{appName}.SiteConfigDir
+func SiteConfigDir(appName string) (string, error) {
+	return (AppConf{Name: appName}).SiteConfigDir()
 }
 
-// Shortcut for AppConf{name}.UserCacheDir
-func UserCacheDir(name string) (string, error) {
-	return (AppConf{Name: name}).UserCacheDir()
+// Shortcut for AppConf{appName}.UserCacheDir
+func UserCacheDir(appName string) (string, error) {
+	return (AppConf{Name: appName}).UserCacheDir()
 }
 
-// Shortcut for AppConf{name}.UserLogDir
-func UserLogDir(name string) (string, error) {
-	return (AppConf{Name: name}).UserLogDir()
+// Shortcut for AppConf{appName}.UserLogDir
+func UserLogDir(appName string) (string, error) {
+	return (AppConf{Name: appName}).UserLogDir()
 }

@@ -2,7 +2,6 @@ package appdirs
 
 type AppConf struct {
 	Name    string
-	Author  string
 	Version string
 }
 

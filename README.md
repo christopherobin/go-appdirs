@@ -40,6 +40,11 @@ func main() {
 ## API
 
 ```go
+type AppConf struct {
+	Name    string
+	Version string
+}
+
 // Return the full path to the user-specific directory for this application
 //
 // Typical user data directories are:

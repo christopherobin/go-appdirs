@@ -3,6 +3,7 @@ package appdirs
 type AppConf struct {
 	Name    string
 	Version string
+	Prefix  string
 }
 
 func HomeDir() (string, error) {
@@ -24,7 +25,7 @@ func (conf AppConf) UserDataDir() (string, error) {
 //
 // Typical user data directories are:
 //   Mac OS X:   /Library/Application Support/<AppName>
-//   Unix:       /usr/local/share/<AppName> or $XDG_DATA_DIRS[0]/<AppName>
+//   Unix:       /usr/local/share/<AppName>,<Prefix>/share/<AppName> or $XDG_DATA_DIRS[0]/<AppName>
 func (conf AppConf) SiteDataDir() (string, error) {
 	return conf.siteDataDir()
 }
@@ -45,7 +46,7 @@ func (conf AppConf) UserConfigDir() (string, error) {
 //
 // Typical user data directories are:
 //   Mac OS X:   same as site_data_dir
-//   Unix:       /etc/xdg/<AppName> or $XDG_CONFIG_DIRS[0]/<AppName>
+//   Unix:       /etc/xdg/<AppName>,<Prefix>/etc/<AppName> or $XDG_CONFIG_DIRS[0]/<AppName>
 func (conf AppConf) SiteConfigDir() (string, error) {
 	return conf.siteConfigDir()
 }
@@ -66,6 +67,63 @@ func (conf AppConf) UserCacheDir() (string, error) {
 //   Unix:                   ~/.cache/<AppName>/logs  # or under $XDG_CACHE_HOME if defined
 func (conf AppConf) UserLogDir() (string, error) {
 	return conf.userLogDir()
+}
+
+// Return a string->string map that contains all the possible folders for the application.
+//
+// The map has the following keys:
+//   Home       -> HomeDir()
+//   Data       -> UserDataDir()
+//   SiteData   -> SiteDataDir()
+//   Config     -> UserConfigDir()
+//   SiteConfig -> SiteConfigDir()
+//   Cache      -> UserCacheDir()
+//   Log        -> UserLogDir()
+func (conf AppConf) Directories() (map[string]string, error) {
+	homeDir, err := HomeDir()
+	if err != nil {
+		return nil, err
+	}
+
+	userDataDir, err := conf.UserDataDir()
+	if err != nil {
+		return nil, err
+	}
+
+	siteDataDir, err := conf.SiteDataDir()
+	if err != nil {
+		return nil, err
+	}
+
+	userConfigDir, err := conf.UserConfigDir()
+	if err != nil {
+		return nil, err
+	}
+
+	siteConfigDir, err := conf.SiteConfigDir()
+	if err != nil {
+		return nil, err
+	}
+
+	userCacheDir, err := conf.UserCacheDir()
+	if err != nil {
+		return nil, err
+	}
+
+	userLogDir, err := conf.UserLogDir()
+	if err != nil {
+		return nil, err
+	}
+
+	return map[string]string{
+		"Home":       homeDir,
+		"Data":       userDataDir,
+		"SiteData":   siteDataDir,
+		"Config":     userConfigDir,
+		"SiteConfig": siteConfigDir,
+		"Cache":      userCacheDir,
+		"Log":        userLogDir,
+	}, nil
 }
 
 // Shortcut for AppConf{appName}.UserDataDir

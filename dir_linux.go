@@ -70,6 +70,15 @@ func (conf AppConf) userDataDir() (string, error) {
 func (conf AppConf) siteDataDir() (string, error) {
 	dataDir := "/usr/local/share"
 
+	if conf.Prefix != "" {
+		dataDir = path.Join(conf.Prefix, "share")
+	}
+
+	// special case if the prefix is /, use /usr/share
+	if conf.Prefix == "/" {
+		dataDir = "/usr/share"
+	}
+
 	// first use the XDG_DATA_HOME env variable, otherwise fallback to a safe default
 	if os.Getenv("XDG_DATA_DIRS") != "" {
 		var err error
@@ -120,6 +129,10 @@ func (conf AppConf) userConfigDir() (string, error) {
 
 func (conf AppConf) siteConfigDir() (string, error) {
 	configDir := "/etc/xdg"
+
+	if conf.Prefix != "" {
+		configDir = path.Join(conf.Prefix, "etc")
+	}
 
 	// first use the XDG_DATA_HOME env variable, otherwise fallback to a safe default
 	if os.Getenv("XDG_CONFIG_DIRS") != "" {
